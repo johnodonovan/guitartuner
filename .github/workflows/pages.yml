@@ -25,25 +25,15 @@ jobs:
         run: |
           mkdir -p ./deploy
           cp -r ./static/* ./deploy/
-          # Make sure index.html is at the root level
-          if [ -f ./static/index.html ]; then
-            echo "Found index.html in static directory, copying to deploy directory"
-            cp ./static/index.html ./deploy/index.html
-          else
-            echo "WARNING: index.html not found in static directory"
-            ls -la ./static/
-          fi
+          
+          # Make sure index.html is at the root level by explicitly copying it
+          echo "Ensuring index.html is at the root of the deployment"
+          cp ./static/index.html ./deploy/index.html
           
           # Copy root index.html as a fallback
           if [ -f ./index.html ]; then
-            echo "Found root index.html, copying to deploy directory"
-            # Keep the original but also make a copy as 'root-index.html' for reference
-            cp ./index.html ./deploy/root-index.html
-            
-            # If no index.html exists yet, use the root one
-            if [ ! -f ./deploy/index.html ]; then
-              cp ./index.html ./deploy/index.html
-            fi
+            echo "Found root index.html, saving as home.html for reference"
+            cp ./index.html ./deploy/home.html
           fi
           
           # Create a .nojekyll file to disable Jekyll processing
