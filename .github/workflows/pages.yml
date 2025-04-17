@@ -46,6 +46,10 @@ jobs:
             fi
           fi
           
+          # Create a .nojekyll file to disable Jekyll processing
+          touch ./deploy/.nojekyll
+          echo "Created .nojekyll file to disable Jekyll processing"
+          
           # Copy additional files
           cp ./LICENSE ./deploy/ || echo "LICENSE file not copied"
           cp ./README.md ./deploy/ || echo "README file not copied"
