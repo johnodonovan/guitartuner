@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isListening = false;
     let animationId = null;
     let micStream = null;
+    let currentMode = 'reference'; // 'reference' or 'tuner'
     
     // Guitar string frequencies and notes
     const frequencies = {
@@ -156,24 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Mode switching
-    referenceModeBtn.addEventListener('click', function() {
-        if (!this.classList.contains('active')) {
-            tunerModeBtn.classList.remove('active');
-            this.classList.add('active');
-            tunerMode.classList.remove('active');
-            referenceMode.classList.add('active');
-            stopMicrophone();
-        }
-    });
-    
-    tunerModeBtn.addEventListener('click', function() {
-        if (!this.classList.contains('active')) {
-            referenceModeBtn.classList.remove('active');
-            this.classList.add('active');
-            referenceMode.classList.remove('active');
-            tunerMode.classList.add('active');
-        }
-    });
+    referenceModeBtn.addEventListener('click', () => switchMode('reference'));
+    tunerModeBtn.addEventListener('click', () => switchMode('tuner'));
     
     // Microphone control
     startMicBtn.addEventListener('click', startMicrophone);
@@ -570,5 +555,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (startMicBtn) startMicBtn.textContent = "Microphone Not Supported";
         if (micStatusValue) micStatusValue.textContent = "Not supported";
         if (detectedFreq) detectedFreq.textContent = "Your browser doesn't support microphone access.";
+    }
+
+    // Switch between reference and tuner modes
+    function switchMode(mode) {
+        currentMode = mode;
+        updateUIForMode();
+    }
+
+    // Update UI based on the current mode
+    function updateUIForMode() {
+        if (currentMode === 'reference') {
+            referenceMode.style.display = 'block';
+            tunerMode.style.display = 'none';
+            referenceModeBtn.classList.add('active');
+            tunerModeBtn.classList.remove('active');
+        } else {
+            referenceMode.style.display = 'none';
+            tunerMode.style.display = 'block';
+            referenceModeBtn.classList.remove('active');
+            tunerModeBtn.classList.add('active');
+        }
     }
 });

@@ -59,4 +59,17 @@ John O'Donovan
 
 ## Demo
 
-Check out the online repository at [github.com/johnodonovan/guitartuner](https://github.com/johnodonovan/guitartuner). 
+Check out the online repository at [github.com/johnodonovan/guitartuner](https://github.com/johnodonovan/guitartuner).
+
+You can try the live demo of the application at [johnodonovan.github.io/guitartuner](https://johnodonovan.github.io/guitartuner).
+
+## GitHub Pages Deployment
+
+This project is set up to automatically deploy to GitHub Pages when changes are pushed to the main branch. The deployment process is handled by the GitHub Actions workflow defined in `.github/workflows/pages.yml`.
+
+To deploy your own version:
+
+1. Fork this repository
+2. Ensure GitHub Pages is enabled in your repository settings
+3. Push changes to the main branch
+4. The GitHub Actions workflow will automatically build and deploy the site 
