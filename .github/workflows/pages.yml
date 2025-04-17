@@ -24,17 +24,8 @@ jobs:
       - name: Copy static files to deploy directory
         run: |
           mkdir -p ./deploy
+          # Copy contents from static directory to the root of deploy
           cp -r ./static/* ./deploy/
-          
-          # Make sure index.html is at the root level by explicitly copying it
-          echo "Ensuring index.html is at the root of the deployment"
-          cp ./static/index.html ./deploy/index.html
-          
-          # Copy root index.html as a fallback
-          if [ -f ./index.html ]; then
-            echo "Found root index.html, saving as home.html for reference"
-            cp ./index.html ./deploy/home.html
-          fi
           
           # Create a .nojekyll file to disable Jekyll processing
           touch ./deploy/.nojekyll
@@ -42,8 +33,8 @@ jobs:
           
           # Copy additional files
           cp ./LICENSE ./deploy/ || echo "LICENSE file not copied"
-          cp ./README.md ./deploy/ || echo "README file not copied"
           
+          # Show contents for debugging
           echo "Contents of deploy directory:"
           ls -la ./deploy/
 
