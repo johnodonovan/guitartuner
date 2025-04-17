@@ -8,27 +8,43 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v3
 
       - name: Copy static files to deploy directory
         run: |
           mkdir -p ./deploy
           cp -r ./static/* ./deploy/
-          cp ./static/index.html ./deploy/
-          cp ./LICENSE ./deploy/
-          cp ./README.md ./deploy/
+          # Make sure index.html is at the root level
+          if [ -f ./static/index.html ]; then
+            echo "Found index.html, copying to deploy directory"
+            cp ./static/index.html ./deploy/index.html
+          else
+            echo "WARNING: index.html not found in static directory"
+            ls -la ./static/
+          fi
+          # Copy additional files
+          cp ./LICENSE ./deploy/ || echo "LICENSE file not copied"
+          cp ./README.md ./deploy/ || echo "README file not copied"
+          
+          echo "Contents of deploy directory:"
+          ls -la ./deploy/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./deploy
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} 
+        id: deployment
+        uses: actions/deploy-pages@v2 
