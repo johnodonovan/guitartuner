@@ -30,24 +30,16 @@ jobs:
           echo "Files in static directory:"
           ls -la ./static
 
-      - name: Copy static files to deploy directory
+      - name: Prepare deploy directory
         run: |
           mkdir -p ./deploy
-          # Copy contents from static directory to the root of deploy
-          cp -r ./static/* ./deploy/
+          mkdir -p ./deploy/static
+
+          # Copy static files to the static directory
+          cp -r ./static/* ./deploy/static/
           
-          # Make sure we are not including any README.md as index
-          rm -f ./deploy/README.md 2>/dev/null || true
-          
-          # Make sure we have an index.html at the root
-          if [ ! -f ./deploy/index.html ]; then
-            echo "WARNING: No index.html found in deploy directory"
-            # Copy static/index.html to the root if it exists
-            if [ -f ./static/index.html ]; then
-              echo "Copying static/index.html to deploy/index.html"
-              cp ./static/index.html ./deploy/index.html
-            fi
-          fi
+          # Copy the root index.html
+          cp ./index.html ./deploy/index.html
           
           # Create a .nojekyll file to disable Jekyll processing
           touch ./deploy/.nojekyll
@@ -56,9 +48,14 @@ jobs:
           # Copy additional files
           cp ./LICENSE ./deploy/ || echo "LICENSE file not copied"
           
+          # Remove any README.md to prevent it from being displayed
+          rm -f ./deploy/README.md 2>/dev/null || true
+          
           # Show contents for debugging
           echo "Contents of deploy directory:"
           ls -la ./deploy/
+          echo "Contents of deploy/static directory:"
+          ls -la ./deploy/static/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
