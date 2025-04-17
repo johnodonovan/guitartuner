@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Tuner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Acoustic Guitar Tuner</h1>
+        
+        <div class="mode-switch">
+            <button id="reference-mode-btn" class="mode-btn active">Reference Mode</button>
+            <button id="tuner-mode-btn" class="mode-btn">Tuner Mode</button>
+        </div>
+        
+        <div id="reference-mode" class="mode-container active">
+            <p>Click on a string button to hear the reference note</p>
+            
+            <div class="guitar">
+                <div class="guitar-neck">
+                    {% for string in guitar_strings|reverse %}
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>{{ string.name }}</span>
+                            <span class="frequency">{{ string.frequency }}</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="{{ string.note }}">
+                            Play {{ string.note }}
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="stop-button">Stop Sound</button>
+            </div>
+        </div>
+        
+        <div id="tuner-mode" class="mode-container">
+            <p>Play a note on your guitar to tune it</p>
+            
+            <div class="tuner-display">
+                <div class="tuner-info">
+                    <div class="detected-note">--</div>
+                    <div class="detected-freq">0 Hz</div>
+                </div>
+                
+                <div class="tuner-gauge">
+                    <div class="gauge-scale">
+                        <div class="gauge-marks">
+                            <div class="mark-low"></div>
+                            <div class="mark-center"></div>
+                            <div class="mark-high"></div>
+                        </div>
+                        <div class="gauge-needle"></div>
+                    </div>
+                    <div class="cent-value">0 cents</div>
+                </div>
+                
+                <div class="closest-note">
+                    <div>Closest String: <span id="closest-string">--</span></div>
+                    <div>Target Note: <span id="target-note">--</span></div>
+                </div>
+                
+                <div class="audio-visualizer">
+                    <canvas id="waveform-canvas" width="600" height="100"></canvas>
+                </div>
+            </div>
+            
+            <div class="mic-controls">
+                <button id="start-mic-btn" class="primary-btn">Start Microphone</button>
+                <button id="stop-mic-btn" class="primary-btn" disabled>Stop Microphone</button>
+            </div>
+            
+            <div class="mic-status">
+                <div class="status-label">Microphone Status:</div>
+                <div id="mic-status-value" class="status-value">Not started</div>
+                <button id="test-audio-btn" class="small-btn">Test Audio System</button>
+            </div>
+            
+            <div class="troubleshooting-panel">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li>Make sure your microphone is connected and working properly</li>
+                    <li>Ensure you've granted microphone permission to this site</li>
+                    <li>Try using Google Chrome for better microphone support</li>
+                    <li>Play your guitar string loudly and close to the microphone</li>
+                    <li>Check if your browser extensions might be interfering</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/tuner.js') }}"></script>
+</body>
+</html>
