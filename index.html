@@ -4,36 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guitar Tuner</title>
-    <!-- Meta redirect to the actual application -->
-    <meta http-equiv="refresh" content="0;url=https://johnodonovan.github.io/guitartuner/index.html">
+    <!-- Direct link with no redirect -->
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
             line-height: 1.6;
+            background-color: #f5f5f5;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         h1 {
             color: #333;
+            margin-bottom: 20px;
         }
-        a {
-            color: #0366d6;
+        .button {
+            display: inline-block;
+            background-color: #0366d6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
             text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
-        a:hover {
-            text-decoration: underline;
+        .button:hover {
+            background-color: #024ea7;
+        }
+        .description {
+            margin-bottom: 30px;
+            color: #555;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Guitar Tuner</h1>
-        <p>If you are not automatically redirected, please click the link below:</p>
-        <p><a href="https://johnodonovan.github.io/guitartuner/index.html">Go to Guitar Tuner App</a></p>
+        <h1>Acoustic Guitar Tuner</h1>
+        <div class="description">
+            <p>A web-based guitar tuner that helps you tune your 6-string acoustic guitar.</p>
+            <p>Features two modes: Reference Mode for playing standard tuning tones, and Tuner Mode for analyzing your guitar's pitch.</p>
+        </div>
+        <a href="static/index.html" class="button">Launch Guitar Tuner App</a>
     </div>
 </body>
 </html> 
