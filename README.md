@@ -51,8 +51,12 @@ To run the app locally:
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
-John O'Donovan 
+John O'Donovan
+
+## Demo
+
+Check out the online repository at [github.com/johnodonovan/guitartuner](https://github.com/johnodonovan/guitartuner). 
