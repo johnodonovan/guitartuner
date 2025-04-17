@@ -20,12 +20,34 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
+        
+      - name: Debug workspace
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in root directory:"
+          ls -la
+          echo "Files in static directory:"
+          ls -la ./static
 
       - name: Copy static files to deploy directory
         run: |
           mkdir -p ./deploy
           # Copy contents from static directory to the root of deploy
           cp -r ./static/* ./deploy/
+          
+          # Make sure we are not including any README.md as index
+          rm -f ./deploy/README.md 2>/dev/null || true
+          
+          # Make sure we have an index.html at the root
+          if [ ! -f ./deploy/index.html ]; then
+            echo "WARNING: No index.html found in deploy directory"
+            # Copy static/index.html to the root if it exists
+            if [ -f ./static/index.html ]; then
+              echo "Copying static/index.html to deploy/index.html"
+              cp ./static/index.html ./deploy/index.html
+            fi
+          fi
           
           # Create a .nojekyll file to disable Jekyll processing
           touch ./deploy/.nojekyll
