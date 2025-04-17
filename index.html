@@ -4,36 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guitar Tuner</title>
-    <!-- Meta redirect to the actual application -->
-    <meta http-equiv="refresh" content="0;url=https://johnodonovan.github.io/guitartuner/index.html">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #333;
-        }
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Add a meta description for search engines -->
+    <meta name="description" content="A web-based guitar tuner application that helps you tune your acoustic guitar.">
 </head>
 <body>
     <div class="container">
-        <h1>Guitar Tuner</h1>
-        <p>If you are not automatically redirected, please click the link below:</p>
-        <p><a href="https://johnodonovan.github.io/guitartuner/index.html">Go to Guitar Tuner App</a></p>
+        <h1>Acoustic Guitar Tuner</h1>
+        
+        <div class="mode-switch">
+            <button id="reference-mode-btn" class="mode-btn active">Reference Mode</button>
+            <button id="tuner-mode-btn" class="mode-btn">Tuner Mode</button>
+        </div>
+        
+        <div id="reference-mode" class="mode-container active">
+            <p>Click on a string button to hear the reference note</p>
+            
+            <div class="guitar">
+                <div class="guitar-neck">
+                    <!-- E4 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>E (high/1st string)</span>
+                            <span class="frequency">329.63 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="E4">
+                            Play E4
+                        </button>
+                    </div>
+                    <!-- B3 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>B (2nd string)</span>
+                            <span class="frequency">246.94 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="B3">
+                            Play B3
+                        </button>
+                    </div>
+                    <!-- G3 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>G (3rd string)</span>
+                            <span class="frequency">196 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="G3">
+                            Play G3
+                        </button>
+                    </div>
+                    <!-- D3 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>D (4th string)</span>
+                            <span class="frequency">146.83 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="D3">
+                            Play D3
+                        </button>
+                    </div>
+                    <!-- A2 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>A (5th string)</span>
+                            <span class="frequency">110 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="A2">
+                            Play A2
+                        </button>
+                    </div>
+                    <!-- E2 string -->
+                    <div class="string-container">
+                        <div class="string-info">
+                            <span>E (low/6th string)</span>
+                            <span class="frequency">82.41 Hz</span>
+                        </div>
+                        <div class="string"></div>
+                        <button class="tune-button" data-note="E2">
+                            Play E2
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="stop-button">Stop Sound</button>
+            </div>
+        </div>
+        
+        <div id="tuner-mode" class="mode-container">
+            <p>Play a note on your guitar to tune it</p>
+            
+            <div class="tuner-display">
+                <div class="tuner-info">
+                    <div class="detected-note">--</div>
+                    <div class="detected-freq">0 Hz</div>
+                </div>
+                
+                <div class="tuner-gauge">
+                    <div class="gauge-scale">
+                        <div class="gauge-marks">
+                            <div class="mark-low"></div>
+                            <div class="mark-center"></div>
+                            <div class="mark-high"></div>
+                        </div>
+                        <div class="gauge-needle"></div>
+                    </div>
+                    <div class="cent-value">0 cents</div>
+                </div>
+                
+                <div class="closest-note">
+                    <div>Closest String: <span id="closest-string">--</span></div>
+                    <div>Target Note: <span id="target-note">--</span></div>
+                </div>
+                
+                <div class="audio-visualizer">
+                    <canvas id="waveform-canvas" width="600" height="100"></canvas>
+                </div>
+            </div>
+            
+            <div class="mic-controls">
+                <button id="start-mic-btn" class="primary-btn">Start Microphone</button>
+                <button id="stop-mic-btn" class="primary-btn" disabled>Stop Microphone</button>
+            </div>
+            
+            <div class="mic-status">
+                <div class="status-label">Microphone Status:</div>
+                <div id="mic-status-value" class="status-value">Not started</div>
+                <button id="test-audio-btn" class="small-btn">Test Audio System</button>
+            </div>
+            
+            <div class="troubleshooting-panel">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li>Make sure your microphone is connected and working properly</li>
+                    <li>Ensure you've granted microphone permission to this site</li>
+                    <li>Try using Google Chrome for better microphone support</li>
+                    <li>Play your guitar string loudly and close to the microphone</li>
+                    <li>Check if your browser extensions might be interfering</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 John O'Donovan | <a href="https://github.com/johnodonovan/guitartuner">View on GitHub</a></p>
+            <p><a href="https://github.com/johnodonovan/guitartuner/blob/main/LICENSE">MIT License</a></p>
+        </footer>
     </div>
+    
+    <script src="js/tuner.js"></script>
 </body>
 </html> 

@@ -61,7 +61,8 @@ John O'Donovan
 
 Check out the online repository at [github.com/johnodonovan/guitartuner](https://github.com/johnodonovan/guitartuner).
 
-You can try the live demo of the application at [johnodonovan.github.io/guitartuner](https://johnodonovan.github.io/guitartuner).
+You can try the live demo of the application at:
+**[https://johnodonovan.github.io/guitartuner](https://johnodonovan.github.io/guitartuner)**
 
 ## GitHub Pages Deployment
 
